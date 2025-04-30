@@ -1,5 +1,5 @@
-/* Global Styles */
-:root {
+ /* Global Styles */
+ :root {
     --primary-color: #2c3e50;
     --secondary-color: #16a085;
     --accent-color: #e74c3c;
@@ -278,4 +278,12 @@ footer {
 
 .download-btn img {
     width: 30px;
+}
+
+.map-caption {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin: 10px 0;
+    font-size: 0.9rem;
 }
