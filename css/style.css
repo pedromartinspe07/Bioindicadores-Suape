@@ -220,9 +220,8 @@ footer {
 
 .chart-container {
     position: relative;
-    height: 300px;
+    height: 400px;
     margin: 20px 0;
-    overflow-x: auto;
 }
 
 .chart-caption {
@@ -230,30 +229,23 @@ footer {
     font-style: italic;
     color: #666;
     margin-top: 10px;
-    font-size: 0.9rem;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    overflow-x: auto;
-    display: block;
-    font-size: 0.9rem;
 }
 
 .data-table th, .data-table td {
-    padding: 8px;
+    padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    white-space: nowrap;
 }
 
 .data-table th {
     background-color: var(--secondary-color);
     color: white;
-    position: sticky;
-    top: 0;
 }
 
 .data-table tr:nth-child(even) {
@@ -294,25 +286,4 @@ footer {
     color: #666;
     margin: 10px 0;
     font-size: 0.9rem;
-}
-
-/* Ajustes para telas pequenas */
-@media (max-width: 768px) {
-    .data-table {
-        font-size: 0.8rem;
-    }
-
-    .data-table th, .data-table td {
-        padding: 6px;
-    }
-
-    .chart-container {
-        height: 250px;
-        margin: 15px 0;
-    }
-
-    .chart-caption {
-        font-size: 0.8rem;
-        margin-top: 5px;
-    }
 }
