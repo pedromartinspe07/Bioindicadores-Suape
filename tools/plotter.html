@@ -1,0 +1,12 @@
+<py-script>
+import matplotlib.pyplot as plt
+from js import fetch
+
+res = await fetch('/data/brutos.csv')
+dados = await res.text()
+
+fig, ax = plt.subplots()
+ax.plot([1,2,3], [4,5,6])
+display(fig, target="plot")
+</py-script>
+<div id="plot"></div>
