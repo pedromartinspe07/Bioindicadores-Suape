@@ -1,0 +1,15 @@
+# .github/workflows/process.yml
+name: Processar Dados
+on: [push]
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: |
+          pip install pandas matplotlib
+          python src/process.py
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with: { folder: 'output' }
