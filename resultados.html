@@ -8,6 +8,9 @@
     <link rel="icon" href="images/favicon.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <!-- Date Adapter for Chart.js Time Scale -->
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.min.js"></script>
 </head>
 <body>
     <header>
@@ -204,6 +207,10 @@
 
     <script src="js/utils.js"></script>
     <script>
+        // Register Chart.js plugins and adapters
+        // Chart.register(ChartZoom); // Removed as plugin auto-registers or is configured in options
+        Chart.register(ChartjsAdapterDateFns);
+
         document.addEventListener('DOMContentLoaded', async () => {
             let bioindicatorsData = [];
             let timeSeriesData = [];
