@@ -175,6 +175,24 @@
                 </ol>
                 <p>Acreditamos que a aplicação dessas recomendações, baseadas em evidências científicas, contribuirá significativamente para a sustentabilidade ambiental do Porto de Suape e a saúde de seus ecossistemas costeiros.</p>
             </article>
+
+            <article class="results-card">
+                <h3>Limitações do Estudo e Perspectivas Futuras</h3>
+                <p>Todo estudo científico possui inerentemente suas limitações, e o nosso projeto não é diferente. Reconhecemos que a compreensão completa dos ecossistemas costeiros em uma área tão dinâmica quanto Suape é um desafio contínuo. As principais limitações incluem:</p>
+                <ul>
+                    <li>**Escala Temporal e Espacial**: Embora a amostragem seja regular, a complexidade dos fenômenos ambientais pode exigir monitoramento em escalas temporais ainda mais finas e uma rede de estações mais densa para capturar eventos de curta duração ou micro-ambientes.</li>
+                    <li>**Bioindicadores Específicos**: A seleção dos bioindicadores atuais, embora robusta, pode não abranger todas as respostas biológicas ou todos os grupos taxonômicos sensíveis. Novas pesquisas podem identificar bioindicadores mais específicos para certos tipos de poluentes ou impactos.</li>
+                    <li>**Variabilidade Natural**: A distinção clara entre impactos antropogênicos e variabilidade natural (ex: sazonalidade, eventos climáticos extremos) é um desafio, exigindo séries históricas de dados mais longas para uma análise mais robusta.</li>
+                    <li>**Sinergismo e Antagonismo de Poluentes**: A interação complexa entre diferentes poluentes (sinergismo ou antagonismo) nem sempre é totalmente compreendida pelos métodos atuais, podendo subestimar ou superestimar certos impactos.</li>
+                </ul>
+                <p>Com base nessas considerações, delineamos algumas perspectivas para futuras pesquisas e aprimoramento do monitoramento:</p>
+                <ol>
+                    <li>**Modelagem Preditiva**: Desenvolvimento de modelos preditivos para antecipar cenários de impacto e avaliar a eficácia de diferentes estratégias de mitigação.</li>
+                    <li>**Integração de Novas Tecnologias**: Exploração de tecnologias como sensoriamento remoto, eDNA (DNA ambiental) e biosensores para um monitoramento mais eficiente e de alta resolução.</li>
+                    <li>**Avaliação Socioeconômica**: Integrar análises dos impactos socioeconômicos nas comunidades pesqueiras e tradicionais, proporcionando uma visão mais holística da sustentabilidade na região.</li>
+                    <li>**Colaboração Interinstitucional**: Fortalecer a parceria com outras instituições de pesquisa, órgãos ambientais e a própria comunidade para maximizar o alcance e a relevância dos estudos.</li>
+                </ol>
+            </article>
         </section>
     </main>
 
@@ -231,15 +249,15 @@
                             {
                                 label: 'Abundância',
                                 data: abundancia,
-                                backgroundColor: 'rgba(26, 143, 159, 0.7)',
-                                borderColor: 'rgba(26, 143, 159, 1)',
+                                backgroundColor: 'rgba(0, 86, 122, 0.8)', // Primary-like color, slightly opaque
+                                borderColor: 'rgba(0, 86, 122, 1)',
                                 borderWidth: 1
                             },
                             {
                                 label: 'Índice de Saúde',
                                 data: indiceSaude,
-                                backgroundColor: 'rgba(0, 86, 122, 0.7)',
-                                borderColor: 'rgba(0, 86, 122, 1)',
+                                backgroundColor: 'rgba(26, 143, 159, 0.8)', // Secondary-like color, slightly opaque
+                                borderColor: 'rgba(26, 143, 159, 1)',
                                 borderWidth: 1,
                                 yAxisID: 'y1',
                             }
@@ -291,11 +309,27 @@
 
             const paramFilter = document.getElementById('paramFilter');
 
+            // Define a professional color palette for time series
+            const timeSeriesColors = [
+                '#00567a', // Primary color
+                '#1a8f9f', // Secondary color
+                '#72bf44', // A good complementary green
+                '#f39c12'  // A warning-like yellow/orange
+            ];
+
             function renderTimeSeriesChart(selectedParam = 'Oxigenio') {
                 const labels = [...new Set(timeSeriesData.map(row => row.Data))].sort();
                 const datasets = timeSeriesData.reduce((acc, row) => {
                     if (!acc[row.Estacao]) {
-                        acc[row.Estacao] = { label: `Estação ${row.Estacao}`, data: [], borderColor: getRandomColor(), fill: false };
+                        // Assign colors from the predefined palette
+                        const colorIndex = Object.keys(acc).length % timeSeriesColors.length;
+                        acc[row.Estacao] = {
+                            label: `Estação ${row.Estacao}`,
+                            data: [],
+                            borderColor: timeSeriesColors[colorIndex],
+                            backgroundColor: timeSeriesColors[colorIndex] + '40', // Slightly transparent fill
+                            fill: false
+                        };
                     }
                     acc[row.Estacao].data.push({ x: row.Data, y: parseFloat(row[selectedParam]) });
                     return acc;
@@ -379,7 +413,8 @@
                         datasets: [{
                             label: `Correlação ${xParam} vs ${yParam}`,
                             data: combinedData,
-                            backgroundColor: 'rgba(26, 143, 159, 0.7)'
+                            backgroundColor: 'rgba(0, 86, 122, 0.7)', // Primary color for scatter points
+                            borderColor: 'rgba(0, 86, 122, 1)'
                         }]
                     },
                     options: {
@@ -412,6 +447,8 @@
 
             renderScatterChart();
 
+            // Removed getRandomColor as it's no longer needed for time series
+            /*
             function getRandomColor() {
                 const letters = '0123456789ABCDEF';
                 let color = '#';
@@ -420,6 +457,7 @@
                 }
                 return color;
             }
+            */
         });
     </script>
 </body>

@@ -53,6 +53,9 @@ header {
     align-items: center;
     box-shadow: var(--shadow-medium);
     flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    position: sticky; /* Make the header sticky */
+    top: 0; /* Stick to the top */
+    z-index: 1000; /* Ensure it stays on top of other content */
 }
 
 .logo {
@@ -433,16 +436,20 @@ footer {
     .search-form {
         width: 100%;
     }
-
+    
     .search-form input {
         width: auto; /* Allow input to grow */
         flex-grow: 1;
     }
     
     .search-results {
-        width: 90%;
-        left: 5%; /* Center results */
-        right: 5%;
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-height: 50vh;
+        border-radius: 8px 8px 0 0;
     }
 
     .banner {
@@ -497,126 +504,42 @@ footer {
     }
 
     .map-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        align-items: center;
-        justify-content: center; /* Center the map and legend horizontally */
+        flex-direction: column; /* Stack map and legend */
+        align-items: center; /* Center items when stacked */
+        gap: 20px; /* Consistent gap */
     }
 
     .map-image {
-        flex: none; /* Remove flex-grow to control width with max-width */
-        min-width: 150px;
-        max-width: 300px; /* Limit maximum width for larger screens */
-        width: 100%; /* Ensure it takes full width on smaller screens */
+        min-width: 150px; /* Ensure a minimum size */
+        max-width: 300px; /* Limit max size on smaller screens */
+        width: 100%; /* Take full width within its container */
         height: auto; /* Maintain aspect ratio */
-        border: 1px solid #ddd;
-        border-radius: 8px;
         display: block; /* Ensure it behaves as a block element */
         margin: 0 auto; /* Center the image */
     }
 
     .map-legend {
-        flex: 1;
-        min-width: 250px;
-    }
-
-    .color-box {
-        display: inline-block;
-        width: 15px;
-        height: 15px;
-        margin-right: 10px;
-    }
-
-    /* Results Page Specific Styles */
-    .results-card {
-        background-color: white;
-        border-radius: 10px; /* Consistent border-radius */
-        box-shadow: var(--shadow-light);
-        padding: 2rem;
-        margin-bottom: 1.8rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    /* Ensure image sizing within download buttons */
-    .download-btn img {
-        width: 24px; /* Slightly smaller icon size */
-        height: auto; /* Maintain aspect ratio */
-        vertical-align: middle; /* Align icon nicely with text */
-    }
-
-    .chart-container {
-        position: relative;
-        height: auto; /* Let Chart.js determine height */
-        min-height: 250px; /* Minimum height for charts */
-        margin: 20px 0;
-    }
-
-    .chart-caption {
-        text-align: center;
-        font-style: italic;
-        color: #666;
-        margin-top: 10px;
-        font-size: 0.9rem; /* Consistent font size */
-    }
-
-    .data-table {
+        min-width: unset;
         width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 0.95rem; /* Slightly smaller font for table data */
-    }
-
-    .data-table th, .data-table td {
-        padding: 12px;
         text-align: left;
-        border-bottom: 1px solid var(--border-color); /* Use CSS variable */
-    }
-
-    .data-table th {
-        background-color: var(--secondary-color);
-        color: white;
-    }
-
-    .data-table tr:nth-child(even) {
-        background-color: #f8f8f8; /* Lighter shade for even rows */
     }
 
     .download-options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-        margin-top: 2rem; /* Add some top margin */
+        flex-direction: column;
+        align-items: center;
+        gap: 15px; /* Adjust gap for stacked buttons */
     }
 
     .download-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background-color: var(--light-color);
-        padding: 15px 20px; /* Adjusted padding */
-        border-radius: 8px;
-        text-decoration: none;
-        color: var(--dark-color);
-        transition: transform 0.3s, box-shadow 0.3s;
-        font-weight: bold; /* Make text bold */
+        width: 90%; /* Make buttons take more width */
+        justify-content: center;
+        padding: 12px 15px; /* Adjusted padding */
     }
 
-    .download-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-medium);
-    }
-
-    .map-caption {
-        text-align: center;
-        font-style: italic;
-        color: #666;
-        margin: 10px 0;
+    .data-table th, .data-table td {
+        padding: 8px; /* Smaller padding for tables */
         font-size: 0.9rem;
     }
-
-/* Search Bar Styles (Keeping previous adjustments) */
 }
 
 @media (max-width: 480px) {
@@ -657,4 +580,10 @@ footer {
 .chart-controls select {
     flex-grow: 1;
     max-width: 300px;
+}
+
+/* Table specific styles for hover effect */
+.data-table tbody tr:hover {
+    background-color: var(--border-color); /* Light highlight on hover */
+    cursor: pointer;
 }

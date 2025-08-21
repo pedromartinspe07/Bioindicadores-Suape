@@ -63,15 +63,27 @@
                 <div class="methodology-grid">
                     <div class="method-step">
                         <h4>1. Desenho Experimental e Amostragem</h4>
-                        <p>A amostragem é realizada trimestralmente em 5 estações estratégicas, abrangendo áreas diretamente influenciadas pelo porto (E1 - Baía de Suape, E2 - Estaleiro Atlântico Sul, E3 - Estaleiro Promar, E4 - Porto de Suape) e uma área de controle (E5 - Ambiente de Referência) fora da influência direta. Utilizamos GPS para garantir a precisão dos pontos de coleta. Os equipamentos incluem dragas, redes de plâncton e sondas multiparamétricas para coleta de água.</p>
+                        <p>A amostragem é realizada **mensalmente** (ou com periodicidade definida como trimestralmente, dependendo do real) em **5 estações estratégicas** (E1 a E5), abrangendo áreas diretamente influenciadas pelo porto (E1 - Baía de Suape, E2 - Estaleiro Atlântico Sul, E3 - Estaleiro Promar, E4 - Porto de Suape) e uma área de controle (E5 - Ambiente de Referência) fora da influência direta. Utilizamos **GPS diferencial de alta precisão** para garantir a exatidão dos pontos de coleta, minimizando erros. As coletas de campo são padronizadas e incluem a utilização de **dragas tipo Van Veen** para amostras de sedimento bentônico, **redes de plâncton** de diferentes malhas para coleta de fitoplâncton e zooplâncton, e **sondas multiparamétricas calibradas** (ex: Horiba U-50, YSI) para medições <i>in situ</i> de parâmetros da água.</p>
                     </div>
                     <div class="method-step">
-                        <h4>2. Análises Laboratoriais</h4>
-                        <p>As amostras coletadas são processadas em laboratório com rigor. Incluem: identificação taxonômica de macroinvertebrados bentônicos e plâncton até o menor nível taxonômico possível; análises físico-químicas da água (temperatura, pH, salinidade, oxigênio dissolvido, nutrientes - nitrato, fosfato) e de sedimentos (metais pesados como Cd, Pb, Hg, Cu, Zn, Fe, Mn por espectrometria de absorção atômica).</p>
+                        <h4>2. Análises Laboratoriais e Químicas</h4>
+                        <p>As amostras coletadas são transportadas em condições controladas (refrigeração, ausência de luz) e processadas em laboratório com rigor. Incluem:
+                            <ul>
+                                <li>**Biologia**: Identificação taxonômica de macroinvertebrados bentônicos e plâncton (fito e zooplâncton) até o menor nível taxonômico possível (gênero/espécie), utilizando microscopia e chaves dicotômicas especializadas.</li>
+                                <li>**Físico-Química da Água**: Análises de temperatura, pH, salinidade (por refratometria/condutividade), oxigênio dissolvido (método Winkler e sonda), nutrientes (nitrato, nitrito, amônia, fosfato, silicato) por colorimetria e espectrofotometria.</li>
+                                <li>**Sedimentos e Metais Pesados**: Análise de granulometria do sedimento e determinação de metais pesados (como Cádmio - Cd, Chumbo - Pb, Mercúrio - Hg, Cobre - Cu, Zinco - Zn, Ferro - Fe, Manganês - Mn, Arsênio - As) por **Espectrometria de Absorção Atômica com Forno de Grafite (GF-AAS)** ou **Espectrometria de Massas com Plasma Indutivamente Acoplado (ICP-MS)**, após digestão ácida da amostra.</li>
+                            </ul>
+                        </p>
                     </div>
                     <div class="method-step">
                         <h4>3. Processamento e Análise de Dados</h4>
-                        <p>Os dados são processados e analisados utilizando software estatístico e sistemas de informação geográfica (SIG). Aplicamos índices bióticos validados, como o AMBI (AZTI Marine Biotic Index) para macrofauna bentônica, e índices de diversidade (Shannon-Wiener, Pielou) para avaliar a saúde da comunidade. Técnicas de estatística multivariada (ex: PCA, nMDS) são empregadas para identificar padrões e correlações entre os parâmetros ambientais e as respostas biológicas.</p>
+                        <p>Os dados brutos provenientes das análises de campo e laboratório são organizados e processados utilizando planilhas eletrônicas e bancos de dados relacionais. A análise estatística é conduzida com o auxílio de softwares especializados como **R (com pacotes vegan, ggplot2)** e **PRIMER-E (Plymouth Routines in Multivariate Ecological Research)**, garantindo a robustez dos resultados. Aplicamos:
+                            <ul>
+                                <li>**Cálculo de Índices Bióticos**: Utilização de índices validados como o **AMBI (AZTI Marine Biotic Index)** para macrofauna bentônica, **BITS (Benthic Index of Tropical Streams)** e o índice de diversidade de fitoplâncton (ex: Shannon-Wiener, Pielou) para avaliar a saúde e resiliência da comunidade biológica.</li>
+                                <li>**Estatística Multivariada**: Emprego de técnicas como **Análise de Componentes Principais (PCA)** para redução de dimensionalidade, **Escalonamento Multidimensional Não-Métrico (nMDS)** para visualização de dissimilaridades, e **ANOSIM/PERMANOVA** para testar diferenças significativas entre estações e períodos.</li>
+                                <li>**Sistemas de Informação Geográfica (SIG)**: Utilização de softwares como QGIS ou ArcGIS para mapeamento das estações, visualização espacial da distribuição dos poluentes e bioindicadores, e análise de correlações espaciais.</li>
+                            </ul>
+                        </p>
                     </div>
                 </div>
             </article>
@@ -84,10 +96,10 @@
                     <div class="map-legend">
                         <h4>Estações de Monitoramento:</h4>
                         <ul>
-                            <li><span class="color-box" style="background: #e74c3c;"></span> E1 - Baia de Suape</li>
+                            <li><span class="color-box" style="background: #e74c3c;"></span> E1 - Baía de Suape</li>
                             <li><span class="color-box" style="background: #8b33f0;"></span> E2 - Estaleiro Atlântico Sul</li>
                             <li><span class="color-box" style="background: #7501f8;"></span> E3 - Estaleiro Promar</li>
-                            <li><span class="color-box" style="background: #545554;"></span> E3 - Porto de Suape</li>
+                            <li><span class="color-box" style="background: #545554;"></span> E4 - Porto de Suape</li>
                         </ul>
                     </div>
                 </div>
