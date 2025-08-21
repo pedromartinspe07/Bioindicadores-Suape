@@ -1,3 +1,72 @@
+// Consolidated JavaScript Utilities for Bioindicadores Suape Website
+
+// Debounce function to limit how often the search function runs
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Function for smooth scrolling with error handling
+function smoothScroll(target) {
+    try {
+        const element = document.querySelector(target);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao fazer scroll:', error);
+    }
+}
+
+// Dynamically load Google Fonts for better performance
+const loadFonts = () => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+};
+
+// Function to update the copyright year in the footer
+function updateCopyright() {
+    try {
+        const footer = document.querySelector('footer p:last-child');
+        if (footer) {
+            footer.innerHTML = `© ${new Date().getFullYear()} BioIndicadores Suape. Todos os direitos reservados.`;
+        }
+    } catch (error) {
+        console.error('Erro ao atualizar copyright:', error);
+    }
+}
+
+// Function to highlight the active navigation link
+function highlightActiveLink() {
+    try {
+        const currentPage = location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a').forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === currentPage) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.classList.remove('active');
+                link.removeAttribute('aria-current');
+            }
+        });
+    } catch (error) {
+        console.error('Erro ao destacar link ativo:', error);
+    }
+}
+
 // Search functionality
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
@@ -25,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
-                // Extract relevant text content from the main section or body
                 const contentElements = doc.querySelectorAll('main p, main h1, main h2, main h3, main h4, main h5, main h6, .card p, .card h3, .publication-item p, .publication-item h3, .data-set-item p, .data-set-item h4, .glossary-item p, .glossary-item h3');
                 let fullContent = '';
                 contentElements.forEach(el => {
@@ -40,20 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchPageContent();
 
-    // Debounce function to limit how often the search function runs
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
+    const debouncedSearch = debounce((query) => {
+        performSearch(query);
+    }, 300);
 
-    // Function to perform the search
     async function performSearch(query) {
         if (!query.trim()) {
             searchResults.innerHTML = '';
@@ -67,13 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pageContent.forEach(page => {
             const pageMatches = [];
-            // Search in page title
             if (page.title.toLowerCase().includes(lowerCaseQuery)) {
                 pageMatches.push({ type: 'title', text: page.title });
             }
-            // Search in content
             if (page.content.includes(lowerCaseQuery)) {
-                // Simple way to get some context, more advanced snippet generation could be done here
                 const startIndex = page.content.indexOf(lowerCaseQuery);
                 const endIndex = startIndex + lowerCaseQuery.length;
                 let snippet = page.content.substring(Math.max(0, startIndex - 100), Math.min(page.content.length, endIndex + 100));
@@ -81,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 pageMatches.push({ type: 'content', text: snippet });
             }
 
-            // If matches found for this page, add to overall results
             if (pageMatches.length > 0) {
                 foundMatches.push({
                     url: page.url,
@@ -91,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Display results
         if (foundMatches.length > 0) {
             searchResults.innerHTML = foundMatches
                 .map(pageMatch => `
@@ -108,12 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Debounced search function
-    const debouncedSearch = debounce((query) => {
-        performSearch(query);
-    }, 300);
-
-    // Event listeners
     searchInput.addEventListener('input', (e) => {
         debouncedSearch(e.target.value);
     });
@@ -123,10 +170,54 @@ document.addEventListener('DOMContentLoaded', () => {
         performSearch(searchInput.value);
     });
 
-    // Close search results when clicking outside
     document.addEventListener('click', (e) => {
         if (!searchForm.contains(e.target)) {
             searchResults.style.display = 'none';
         }
     });
-}); 
+});
+
+// Function to initialize all common events
+function initializeCommonEvents() {
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('href');
+            smoothScroll(target);
+        });
+    });
+
+    // Update copyright year
+    updateCopyright();
+
+    // Highlight active link
+    highlightActiveLink();
+
+    // Add listener for URL changes (useful for SPA)
+    window.addEventListener('popstate', debounce(highlightActiveLink, 100));
+}
+
+// Initialize common events when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeCommonEvents);
+
+// CSV parsing utility function
+async function parseCSV(url) {
+    const response = await fetch(url);
+    const text = await response.text();
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    const headers = lines[0].split(',').map(header => header.trim());
+    const data = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(value => value.trim());
+        if (values.length === headers.length) {
+            let row = {};
+            for (let j = 0; j < headers.length; j++) {
+                row[headers[j]] = values[j];
+            }
+            data.push(row);
+        }
+    }
+    return data;
+} 

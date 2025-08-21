@@ -54,13 +54,13 @@
                     <h4>Dados de Qualidade da Água (2020-2024)</h4>
                     <p>Este conjunto de dados inclui parâmetros físico-químicos da água (temperatura, pH, salinidade, oxigênio dissolvido, nutrientes) coletados em diferentes estações de monitoramento na área de Suape.</p>
                     <a href="dados/dados_brutos.csv" download class="download-link">Baixar CSV</a>
-                    <a href="#" class="download-link">Visualizar Gráficos (em breve)</a>
+                    <div id="quality-data-table-container" class="data-table-container"></div>
                 </div>
                 <div class="data-set-item">
                     <h4>Dados de Bioindicadores (2021-2024)</h4>
                     <p>Informações sobre a ocorrência e abundância de espécies bioindicadoras (ex: bentos, plâncton) e índices de saúde ecológica em Suape.</p>
-                    <a href="#" class="download-link">Baixar CSV (em breve)</a>
-                    <a href="#" class="download-link">Visualizar Gráficos (em breve)</a>
+                    <a href="dados/bioindicadores_mock.csv" download class="download-link">Baixar CSV (em breve)</a>
+                    <div id="bioindicators-data-table-container" class="data-table-container"></div>
                 </div>
             </div>
 
@@ -75,7 +75,65 @@
         <p>© 2025 BioIndicadores Suape. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="js/script.js"></script>
-    <script src="js/search.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Function to render data as an HTML table
+            function renderTable(containerId, data) {
+                if (data.length === 0) {
+                    document.getElementById(containerId).innerHTML = '<p>Nenhum dado disponível.</p>';
+                    return;
+                }
+
+                const table = document.createElement('table');
+                table.classList.add('data-table');
+
+                // Create table header
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                Object.keys(data[0]).forEach(key => {
+                    const th = document.createElement('th');
+                    th.textContent = key;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Create table body
+                const tbody = document.createElement('tbody');
+                data.forEach(rowData => {
+                    const tr = document.createElement('tr');
+                    Object.values(rowData).forEach(value => {
+                        const td = document.createElement('td');
+                        td.textContent = value;
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+
+                document.getElementById(containerId).innerHTML = ''; // Clear loading message
+                document.getElementById(containerId).appendChild(table);
+            }
+
+            // Load and display 'dados_brutos.csv'
+            try {
+                const qualityData = await parseCSV('dados/dados_brutos.csv');
+                renderTable('quality-data-table-container', qualityData);
+            } catch (error) {
+                console.error('Erro ao carregar dados de qualidade da água:', error);
+                document.getElementById('quality-data-table-container').innerHTML = '<p>Erro ao carregar os dados de qualidade da água.</p>';
+            }
+
+            // Load and display 'bioindicadores_mock.csv'
+            try {
+                const bioindicatorsData = await parseCSV('dados/bioindicadores_mock.csv');
+                renderTable('bioindicators-data-table-container', bioindicatorsData);
+            } catch (error) {
+                console.error('Erro ao carregar dados de bioindicadores:', error);
+                document.getElementById('bioindicators-data-table-container').innerHTML = '<p>Erro ao carregar os dados de bioindicadores.</p>';
+            }
+        });
+    </script>
 </body>
 </html>

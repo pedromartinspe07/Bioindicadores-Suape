@@ -50,10 +50,59 @@
             
             <article class="results-card">
                 <h3>Dados Biológicos</h3>
+                <div class="chart-controls">
+                    <label for="speciesFilter">Filtrar por Espécie:</label>
+                    <select id="speciesFilter"></select>
+                </div>
                 <div class="chart-container">
                     <canvas id="speciesChart"></canvas>
                 </div>
-                <p class="chart-caption">Figura 1: Riqueza de espécies por estação de amostragem (2025)</p>
+                <p class="chart-caption">Figura 1: Abundância e Índice de Saúde por Espécie e Estação de Amostragem</p>
+            </article>
+
+            <article class="results-card">
+                <h3>Parâmetros Físico-Químicos ao Longo do Tempo</h3>
+                <div class="chart-controls">
+                    <label for="paramFilter">Selecionar Parâmetro:</label>
+                    <select id="paramFilter">
+                        <option value="Oxigenio">Oxigênio (mg/L)</option>
+                        <option value="pH">pH</option>
+                        <option value="Turbidez">Turbidez (NTU)</option>
+                        <option value="Metais">Metais (ppm)</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="timeSeriesChart"></canvas>
+                </div>
+                <p class="chart-caption">Figura 2: Variação dos parâmetros físico-químicos ao longo do tempo</p>
+            </article>
+
+            <article class="results-card">
+                <h3>Correlação entre Parâmetros</h3>
+                <div class="chart-controls">
+                    <label for="xParam">Eixo X:</label>
+                    <select id="xParam">
+                        <option value="Oxigenio">Oxigênio (mg/L)</option>
+                        <option value="pH">pH</option>
+                        <option value="Turbidez">Turbidez (NTU)</option>
+                        <option value="Metais">Metais (ppm)</option>
+                        <option value="Abundancia">Abundância Bioindicador</option>
+                        <option value="Indice_Saude">Índice de Saúde Bioindicador</option>
+                    </select>
+                    <label for="yParam">Eixo Y:</label>
+                    <select id="yParam">
+                        <option value="Indice_Saude">Índice de Saúde Bioindicador</option>
+                        <option value="Oxigenio">Oxigênio (mg/L)</option>
+                        <option value="pH">pH</option>
+                        <option value="Turbidez">Turbidez (NTU)</option>
+                        <option value="Metais">Metais (ppm)</option>
+                        <option value="Abundancia">Abundância Bioindicador</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="scatterChart"></canvas>
+                </div>
+                <p class="chart-caption">Figura 3: Correlação entre parâmetros selecionados</p>
             </article>
             
             <article class="results-card">
@@ -107,43 +156,269 @@
                     </a>
                 </div>
             </article>
+
+            <article class="results-card">
+                <h3>Interpretação e Recomendações</h3>
+                <p>A análise dos bioindicadores aquáticos revela padrões claros da saúde ecossistêmica nas áreas de influência do Porto de Suape. Observamos que:</p>
+                <ul>
+                    <li>Em estações próximas às operações portuárias (E1, E2), há uma **redução na abundância e diversidade de espécies sensíveis**, e um **aumento na prevalência de espécies tolerantes** à poluição. Isso se correlaciona com níveis mais elevados de metais pesados e turbidez na água.</li>
+                    <li>O **Índice de Saúde (AMBI)** nas estações impactadas é consistentemente inferior, indicando um estado ecológico moderado a pobre, enquanto a estação controle (E3) mantém um índice de boa qualidade.</li>
+                    <li>A variação temporal dos parâmetros físico-químicos mostra picos de poluição que podem ser associados a eventos específicos ou à sazonalidade das operações portuárias.</li>
+                </ul>
+                <p>Com base nesses resultados, a pesquisa propõe as seguintes recomendações para aprimorar a gestão ambiental na região de Suape:</p>
+                <ol>
+                    <li>**Monitoramento Contínuo e Integrado**: Manter e expandir as estações de monitoramento, incluindo análises mais frequentes de bioindicadores e poluentes específicos.</li>
+                    <li>**Controle de Efluentes e Dragagem**: Implementar tecnologias mais eficazes para o tratamento de efluentes industriais e portuários, além de práticas de dragagem que minimizem a resuspensão de sedimentos contaminados.</li>
+                    <li>**Programas de Recuperação de Hábitats**: Desenvolver projetos de restauração de manguezais e outros ecossistemas costeiros degradados, que atuam como filtros naturais e berçários de vida marinha.</li>
+                    <li>**Educação Ambiental e Engajamento**: Fortalecer programas de conscientização para a comunidade local e stakeholders portuários sobre a importância dos bioindicadores e a conservação marinha.</li>
+                    <li>**Pesquisa e Desenvolvimento**: Incentivar estudos adicionais para identificar novos bioindicadores e compreender melhor os efeitos de longo prazo dos impactos cumulativos na região.</li>
+                </ol>
+                <p>Acreditamos que a aplicação dessas recomendações, baseadas em evidências científicas, contribuirá significativamente para a sustentabilidade ambiental do Porto de Suape e a saúde de seus ecossistemas costeiros.</p>
+            </article>
         </section>
     </main>
 
-    <footer >
+    <footer>
         <p>Contato: bioindicadoressuape@gmail.com</p>
         <p>© <span id="current-year">2025</span> BioIndicadores Suape. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/utils.js"></script>
     <script>
-        // Gráfico de espécies
-        const ctx = document.getElementById('speciesChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['E1 - Portuária', 'E2 - Manguezal', 'E3 - Controle'],
-                datasets: [{
-                    label: 'Espécies Sensíveis',
-                    data: [5, 12, 18],
-                    backgroundColor: '#e74c3c'
-                }, {
-                    label: 'Espécies Tolerantes',
-                    data: [15, 8, 3],
-                    backgroundColor: '#3498db'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Número de Espécies'
+        document.addEventListener('DOMContentLoaded', async () => {
+            let bioindicatorsData = [];
+            let timeSeriesData = [];
+
+            // Load both datasets
+            try {
+                bioindicatorsData = await parseCSV('dados/bioindicadores_mock.csv');
+                timeSeriesData = await parseCSV('dados/time_series_mock.csv');
+            } catch (error) {
+                console.error('Erro ao carregar dados CSV:', error);
+                document.getElementById('speciesChart').parentElement.innerHTML = '<p>Erro ao carregar dados para os gráficos.</p>';
+                return;
+            }
+
+            // --- Chart 1: Dados Biológicos (Species Chart) ---
+            const speciesChartCtx = document.getElementById('speciesChart').getContext('2d');
+            let speciesChart;
+
+            const speciesFilter = document.getElementById('speciesFilter');
+            const uniqueSpecies = [...new Set(bioindicatorsData.map(row => row.Especie_Bioindicadora))];
+            uniqueSpecies.forEach(species => {
+                const option = document.createElement('option');
+                option.value = species;
+                option.textContent = species;
+                speciesFilter.appendChild(option);
+            });
+
+            function renderSpeciesChart(filterSpecies = null) {
+                const filteredData = filterSpecies ? bioindicatorsData.filter(row => row.Especie_Bioindicadora === filterSpecies) : bioindicatorsData;
+
+                const labels = filteredData.map(row => row.Estacao + ' - ' + row.Especie_Bioindicadora);
+                const abundancia = filteredData.map(row => parseFloat(row.Abundancia));
+                const indiceSaude = filteredData.map(row => parseFloat(row.Indice_Saude));
+
+                if (speciesChart) {
+                    speciesChart.destroy();
+                }
+
+                speciesChart = new Chart(speciesChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Abundância',
+                                data: abundancia,
+                                backgroundColor: 'rgba(26, 143, 159, 0.7)',
+                                borderColor: 'rgba(26, 143, 159, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Índice de Saúde',
+                                data: indiceSaude,
+                                backgroundColor: 'rgba(0, 86, 122, 0.7)',
+                                borderColor: 'rgba(0, 86, 122, 1)',
+                                borderWidth: 1,
+                                yAxisID: 'y1',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Abundância' }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                beginAtZero: true,
+                                grid: { drawOnChartArea: false },
+                                title: { display: true, text: 'Índice de Saúde' },
+                                min: 0,
+                                max: 1
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) { label += context.parsed.y; }
+                                        return label;
+                                    }
+                                }
+                            }
                         }
                     }
+                });
+            }
+
+            speciesFilter.addEventListener('change', (e) => {
+                renderSpeciesChart(e.target.value === '' ? null : e.target.value);
+            });
+
+            renderSpeciesChart();
+
+            // --- Chart 2: Parâmetros Físico-Químicos ao Longo do Tempo (Time Series Chart) ---
+            const timeSeriesChartCtx = document.getElementById('timeSeriesChart').getContext('2d');
+            let timeSeriesChart;
+
+            const paramFilter = document.getElementById('paramFilter');
+
+            function renderTimeSeriesChart(selectedParam = 'Oxigenio') {
+                const labels = [...new Set(timeSeriesData.map(row => row.Data))].sort();
+                const datasets = timeSeriesData.reduce((acc, row) => {
+                    if (!acc[row.Estacao]) {
+                        acc[row.Estacao] = { label: `Estação ${row.Estacao}`, data: [], borderColor: getRandomColor(), fill: false };
+                    }
+                    acc[row.Estacao].data.push({ x: row.Data, y: parseFloat(row[selectedParam]) });
+                    return acc;
+                }, {});
+
+                if (timeSeriesChart) {
+                    timeSeriesChart.destroy();
                 }
+
+                timeSeriesChart = new Chart(timeSeriesChartCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: Object.values(datasets)
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: { type: 'time', time: { unit: 'month' }, title: { display: true, text: 'Data' } },
+                            y: { beginAtZero: true, title: { display: true, text: selectedParam } }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) { label += context.parsed.y; }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            paramFilter.addEventListener('change', (e) => {
+                renderTimeSeriesChart(e.target.value);
+            });
+
+            renderTimeSeriesChart();
+
+            // --- Chart 3: Correlação entre Parâmetros (Scatter Chart) ---
+            const scatterChartCtx = document.getElementById('scatterChart').getContext('2d');
+            let scatterChart;
+
+            const xParamSelect = document.getElementById('xParam');
+            const yParamSelect = document.getElementById('yParam');
+
+            function renderScatterChart() {
+                const xParam = xParamSelect.value;
+                const yParam = yParamSelect.value;
+
+                const combinedData = [];
+                // For simplicity, combine relevant data. In a real scenario, ensure data alignment.
+                // For now, let's assume `bioindicatorsData` and `timeSeriesData` can be joined by 'Estacao' if needed.
+                // Here, we'll just use the available numeric data.
+                
+                // Example: Using bioindicatorsData for scatter plot
+                bioindicatorsData.forEach(row => {
+                    if (row[xParam] && row[yParam]) {
+                        combinedData.push({
+                            x: parseFloat(row[xParam]),
+                            y: parseFloat(row[yParam]),
+                            label: row.Estacao + ' - ' + row.Especie_Bioindicadora
+                        });
+                    }
+                });
+
+                // You might need to extend this to include data from timeSeriesData as well,
+                // or from original data if it has all parameters in one place.
+                
+                if (scatterChart) {
+                    scatterChart.destroy();
+                }
+
+                scatterChart = new Chart(scatterChartCtx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: `Correlação ${xParam} vs ${yParam}`,
+                            data: combinedData,
+                            backgroundColor: 'rgba(26, 143, 159, 0.7)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                title: { display: true, text: xParam }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: yParam }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.raw.label + `: (${context.raw.x}, ${context.raw.y})`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            xParamSelect.addEventListener('change', renderScatterChart);
+            yParamSelect.addEventListener('change', renderScatterChart);
+
+            renderScatterChart();
+
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
             }
         });
     </script>
