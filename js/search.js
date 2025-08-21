@@ -4,6 +4,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchResults = document.getElementById('search-results');
     const searchForm = document.getElementById('search-form');
 
+    const pagesToSearch = [
+        { url: 'index.html', title: 'Home' },
+        { url: 'projeto.html', title: 'O Projeto' },
+        { url: 'referencial.html', title: 'Referencial' },
+        { url: 'resultados.html', title: 'Resultados' },
+        { url: 'sobre.html', title: 'Sobre o Projeto' },
+        { url: 'publicacoes.html', title: 'Publicações' },
+        { url: 'dados.html', title: 'Dados' },
+        { url: 'glossario.html', title: 'Glossário' },
+        { url: 'contato.html', title: 'Contato' }
+    ];
+
+    let pageContent = [];
+
+    async function fetchPageContent() {
+        for (const page of pagesToSearch) {
+            try {
+                const response = await fetch(page.url);
+                const text = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                // Extract relevant text content from the main section or body
+                const contentElements = doc.querySelectorAll('main p, main h1, main h2, main h3, main h4, main h5, main h6, .card p, .card h3, .publication-item p, .publication-item h3, .data-set-item p, .data-set-item h4, .glossary-item p, .glossary-item h3');
+                let fullContent = '';
+                contentElements.forEach(el => {
+                    fullContent += el.innerText + ' ';
+                });
+                pageContent.push({ ...page, content: fullContent.toLowerCase() });
+            } catch (error) {
+                console.error(`Erro ao carregar o conteúdo de ${page.url}:`, error);
+            }
+        }
+    }
+
+    fetchPageContent();
+
     // Debounce function to limit how often the search function runs
     function debounce(func, wait) {
         let timeout;
@@ -25,42 +61,49 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        try {
-            // Search through the current page content
-            const content = document.body.innerText.toLowerCase();
-            const words = query.toLowerCase().split(' ');
-            
-            // Find matches in the content
-            const matches = [];
-            const paragraphs = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
-            
-            paragraphs.forEach(element => {
-                const text = element.innerText.toLowerCase();
-                if (words.every(word => text.includes(word))) {
-                    matches.push({
-                        text: element.innerText,
-                        element: element.tagName.toLowerCase()
-                    });
-                }
-            });
+        const lowerCaseQuery = query.toLowerCase();
+        const words = lowerCaseQuery.split(' ');
+        const foundMatches = [];
 
-            // Display results
-            if (matches.length > 0) {
-                searchResults.innerHTML = matches
-                    .map(match => `
-                        <div class="search-result-item">
-                            <${match.element}>${match.text}</${match.element}>
-                        </div>
-                    `)
-                    .join('');
-                searchResults.style.display = 'block';
-            } else {
-                searchResults.innerHTML = '<div class="search-result-item">Nenhum resultado encontrado</div>';
-                searchResults.style.display = 'block';
+        pageContent.forEach(page => {
+            const pageMatches = [];
+            // Search in page title
+            if (page.title.toLowerCase().includes(lowerCaseQuery)) {
+                pageMatches.push({ type: 'title', text: page.title });
             }
-        } catch (error) {
-            console.error('Erro na busca:', error);
-            searchResults.innerHTML = '<div class="search-result-item">Erro ao realizar a busca</div>';
+            // Search in content
+            if (page.content.includes(lowerCaseQuery)) {
+                // Simple way to get some context, more advanced snippet generation could be done here
+                const startIndex = page.content.indexOf(lowerCaseQuery);
+                const endIndex = startIndex + lowerCaseQuery.length;
+                let snippet = page.content.substring(Math.max(0, startIndex - 100), Math.min(page.content.length, endIndex + 100));
+                snippet = '...' + snippet + '...';
+                pageMatches.push({ type: 'content', text: snippet });
+            }
+
+            // If matches found for this page, add to overall results
+            if (pageMatches.length > 0) {
+                foundMatches.push({
+                    url: page.url,
+                    title: page.title,
+                    matches: pageMatches
+                });
+            }
+        });
+
+        // Display results
+        if (foundMatches.length > 0) {
+            searchResults.innerHTML = foundMatches
+                .map(pageMatch => `
+                    <a href="${pageMatch.url}" class="search-result-item">
+                        <h3>${pageMatch.title}</h3>
+                        ${pageMatch.matches.map(match => `<p>${match.text}</p>`).join('')}
+                    </a>
+                `)
+                .join('');
+            searchResults.style.display = 'block';
+        } else {
+            searchResults.innerHTML = '<div class="search-result-item">Nenhum resultado encontrado</div>';
             searchResults.style.display = 'block';
         }
     }

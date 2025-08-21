@@ -26,6 +26,17 @@ function smoothScroll(target) {
     }
 }
 
+// Import Google Fonts dynamically for better performance
+const loadFonts = () => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+};
+
+// Load fonts when DOM is ready
+document.addEventListener('DOMContentLoaded', loadFonts);
+
 // Função para atualizar o ano do copyright
 function updateCopyright() {
     try {

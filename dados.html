@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioIndicadores Suape - Monitoramento Ecológico</title>
+    <title>Dados - BioIndicadores Suape</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
@@ -15,13 +15,13 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="projeto.html">O Projeto</a></li>
                 <li><a href="referencial.html">Referencial</a></li>
                 <li><a href="resultados.html">Resultados</a></li>
                 <li><a href="sobre.html">Sobre</a></li>
                 <li><a href="publicacoes.html">Publicações</a></li>
-                <li><a href="dados.html">Dados</a></li>
+                <li><a href="dados.html" class="active">Dados</a></li>
                 <li><a href="glossario.html">Glossário</a></li>
                 <li><a href="contato.html">Contato</a></li>
             </ul>
@@ -44,31 +44,33 @@
     </header>
 
     <main>
-        <section class="banner">
-            <img src="images/banner.jpg" alt="Porto de Suape e ecossistemas costeiros">
-            <div class="banner-text">
-                <h2>Monitoramento Ecológico de Ecossistemas Costeiros</h2>
-                <p>Como as atividades portuárias afetam a saúde dos ecossistemas costeiros?</p>
-            </div>
-        </section>
+        <section class="content-section">
+            <h2>Dados Brutos e Tratados</h2>
+            <p>Nesta seção, disponibilizamos os dados brutos e tratados coletados durante o desenvolvimento do projeto. Nosso objetivo é promover a transparência e facilitar o acesso à informação para a comunidade científica e o público em geral.</p>
 
-        <section class="quick-links">
-            <a href="projeto.html" class="card">
-                <h3>Conheça o Projeto</h3>
-                <p>Metodologia e objetivos da pesquisa</p>
-            </a>
-            <a href="resultados.html" class="card">
-                <h3>Resultados Preliminares</h3>
-                <p>Dados atualizados das análises</p>
-            </a>
-            <a href="contato.html" class="card">
-                <h3>Participe</h3>
-                <p>Envolva-se com nossa pesquisa</p>
-            </a>
+            <h3>Conjuntos de Dados Disponíveis</h3>
+            <div class="data-sets">
+                <div class="data-set-item">
+                    <h4>Dados de Qualidade da Água (2020-2024)</h4>
+                    <p>Este conjunto de dados inclui parâmetros físico-químicos da água (temperatura, pH, salinidade, oxigênio dissolvido, nutrientes) coletados em diferentes estações de monitoramento na área de Suape.</p>
+                    <a href="dados/dados_brutos.csv" download class="download-link">Baixar CSV</a>
+                    <a href="#" class="download-link">Visualizar Gráficos (em breve)</a>
+                </div>
+                <div class="data-set-item">
+                    <h4>Dados de Bioindicadores (2021-2024)</h4>
+                    <p>Informações sobre a ocorrência e abundância de espécies bioindicadoras (ex: bentos, plâncton) e índices de saúde ecológica em Suape.</p>
+                    <a href="#" class="download-link">Baixar CSV (em breve)</a>
+                    <a href="#" class="download-link">Visualizar Gráficos (em breve)</a>
+                </div>
+            </div>
+
+            <h3>Metodologia de Coleta e Análise</h3>
+            <p>Detalhes sobre os métodos padronizados de coleta de amostras, protocolos de laboratório e softwares utilizados para análise e tratamento dos dados.</p>
+            <p>Para mais informações, consulte nosso <a href="pdf/protocolo.pdf" target="_blank">Protocolo de Coleta e Análise</a>.</p>
         </section>
     </main>
 
-    <footer>
+    <footer id="contato-rodape">
         <p>Contato: bioindicadoressuape@gmail.com</p>
         <p>© 2025 BioIndicadores Suape. Todos os direitos reservados.</p>
     </footer>
