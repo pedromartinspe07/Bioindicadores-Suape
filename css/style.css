@@ -385,13 +385,7 @@ footer p {
 }
 
 /* Footer adjustments */
-footer {
-    /* background-color: var(--dark-color); Already defined */
-    /* padding: 1.5rem 0; Already defined */
-    /* margin-top: 2rem; Already defined */
-    /* font-size: 0.9rem; Already defined */
-    /* color: #cccccc; Already defined */
-}
+/* Removed empty footer rule */
 
 /* Responsive Design Adjustments */
 @media (max-width: 1024px) {
@@ -586,4 +580,153 @@ footer {
 .data-table tbody tr:hover {
     background-color: var(--border-color); /* Light highlight on hover */
     cursor: pointer;
+}
+
+.glossary-item {
+    background-color: var(--light-color);
+    border-left: 6px solid var(--secondary-color); /* Consistent with other cards */
+    border-radius: 10px; /* Consistent border-radius */
+    padding: 1.5rem 2rem; /* Adjusted padding for details/summary */
+    margin-bottom: 1.5rem; /* Consistent margin-bottom */
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glossary-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.glossary-item summary {
+    display: block; /* Ensures summary behaves like a block for full click area */
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.3rem; /* Slightly larger for emphasis */
+    padding: 0.5rem 0; /* Padding for click area */
+    outline: none; /* Remove default focus outline */
+    -webkit-tap-highlight-color: transparent; /* Remove highlight on mobile tap */
+}
+
+.glossary-item summary::-webkit-details-marker, /* Hide default marker for Webkit browsers */
+.glossary-item summary::marker { /* Hide default marker for Firefox */
+    display: none;
+}
+
+.glossary-item summary h3 {
+    display: inline; /* Keep h3 on the same line as summary */
+    margin: 0; /* Remove default h3 margins */
+    color: var(--primary-color); /* Ensure consistent color */
+}
+
+.glossary-item p {
+    padding-top: 1rem; /* Space between summary and content */
+    margin-bottom: 0;
+    line-height: 1.7; /* Improved readability */
+    color: var(--text-color);
+}
+
+/* Add a visual indicator for open/closed state */
+.glossary-item summary::after {
+    content: '\25B6'; /* Unicode right-pointing triangle */
+    float: right;
+    transition: transform 0.3s;
+    font-size: 1rem;
+    color: var(--secondary-color);
+}
+
+.glossary-item[open] summary::after {
+    transform: rotate(90deg); /* Rotate to point down when open */
+}
+
+/* Team Section Styles */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; /* More spacing between team cards */
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.team-member-card {
+    background-color: var(--light-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-light);
+    padding: 1.8rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.team-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--secondary-color); /* Highlight photo */
+}
+
+.team-member-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.team-member-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.team-member-card a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.team-member-card a:hover {
+    color: var(--primary-color);
+}
+
+/* Partners Logos */
+.partners-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Spacing between logos */
+    margin-top: 2.5rem;
+    padding: 1rem;
+}
+
+.partners-logos img {
+    max-width: 180px; /* Max width for logos */
+    height: auto;
+    opacity: 0.7; /* Slightly faded */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.partners-logos img:hover {
+    opacity: 1; /* Full opacity on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Project Update Info */
+.project-update-info {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+    color: #777;
+    font-style: italic;
 }

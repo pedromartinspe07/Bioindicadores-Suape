@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
 </head>
 <body>
     <header>
@@ -282,6 +283,17 @@
                             }
                         },
                         plugins: {
+                            zoom: {
+                                zoom: {
+                                    wheel: { enabled: true },
+                                    pinch: { enabled: true },
+                                    mode: 'x',
+                                },
+                                pan: {
+                                    enabled: true,
+                                    mode: 'x',
+                                }
+                            },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -302,6 +314,13 @@
             });
 
             renderSpeciesChart();
+
+            // Reset Zoom button for Species Chart
+            const resetSpeciesZoomBtn = document.createElement('button');
+            resetSpeciesZoomBtn.textContent = 'Reset Zoom';
+            resetSpeciesZoomBtn.className = 'reset-zoom-btn';
+            document.querySelector('#speciesChart').closest('.chart-container').insertAdjacentElement('afterend', resetSpeciesZoomBtn);
+            resetSpeciesZoomBtn.addEventListener('click', () => speciesChart.resetZoom());
 
             // --- Chart 2: Parâmetros Físico-Químicos ao Longo do Tempo (Time Series Chart) ---
             const timeSeriesChartCtx = document.getElementById('timeSeriesChart').getContext('2d');
@@ -352,6 +371,17 @@
                             y: { beginAtZero: true, title: { display: true, text: selectedParam } }
                         },
                         plugins: {
+                            zoom: {
+                                zoom: {
+                                    wheel: { enabled: true },
+                                    pinch: { enabled: true },
+                                    mode: 'x',
+                                },
+                                pan: {
+                                    enabled: true,
+                                    mode: 'x',
+                                }
+                            },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -372,6 +402,13 @@
             });
 
             renderTimeSeriesChart();
+
+            // Reset Zoom button for Time Series Chart
+            const resetTimeSeriesZoomBtn = document.createElement('button');
+            resetTimeSeriesZoomBtn.textContent = 'Reset Zoom';
+            resetTimeSeriesZoomBtn.className = 'reset-zoom-btn';
+            document.querySelector('#timeSeriesChart').closest('.chart-container').insertAdjacentElement('afterend', resetTimeSeriesZoomBtn);
+            resetTimeSeriesZoomBtn.addEventListener('click', () => timeSeriesChart.resetZoom());
 
             // --- Chart 3: Correlação entre Parâmetros (Scatter Chart) ---
             const scatterChartCtx = document.getElementById('scatterChart').getContext('2d');
@@ -430,6 +467,17 @@
                             }
                         },
                         plugins: {
+                            zoom: {
+                                zoom: {
+                                    wheel: { enabled: true },
+                                    pinch: { enabled: true },
+                                    mode: 'xy', // Enable zoom on both axes for scatter plot
+                                },
+                                pan: {
+                                    enabled: true,
+                                    mode: 'xy', // Enable pan on both axes for scatter plot
+                                }
+                            },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -446,6 +494,13 @@
             yParamSelect.addEventListener('change', renderScatterChart);
 
             renderScatterChart();
+
+            // Reset Zoom button for Scatter Chart
+            const resetScatterZoomBtn = document.createElement('button');
+            resetScatterZoomBtn.textContent = 'Reset Zoom';
+            resetScatterZoomBtn.className = 'reset-zoom-btn';
+            document.querySelector('#scatterChart').closest('.chart-container').insertAdjacentElement('afterend', resetScatterZoomBtn);
+            resetScatterZoomBtn.addEventListener('click', () => scatterChart.resetZoom());
 
             // Removed getRandomColor as it's no longer needed for time series
             /*
